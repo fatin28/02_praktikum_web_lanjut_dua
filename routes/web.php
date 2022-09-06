@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeCompanyController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,4 +30,22 @@ Route::get('/', function () {
 
 // Route::get('/', [AboutController::class, '__invoke']);
 
-Route::get('/{id}', [ArticleController::class, '__invoke']);
+// Route::get('/{id}', [ArticleController::class, '__invoke']);
+
+Route::get('/home', [HomeCompanyController::class, 'home']);
+
+#Route prefix
+Route::prefix('category')->group(function () {
+    Route::get('{id}', [HomeCompanyController::class, 'product']);
+});
+
+Route::get('news/{id?}', [HomeCompanyController::class, 'news']);
+
+#Route prefix
+Route::prefix('program')->group(function () {
+    Route::get('{id}', [HomeCompanyController::class, 'program']);
+});
+
+Route::get('/aboutUs', [HomeCompanyController::class, 'aboutUs']);
+
+Route::resource('contactUs', HomeCompanyController::class);
